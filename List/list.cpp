@@ -20,79 +20,96 @@ struct list {
 };
 
 //створення пустого списку
-void empty(list &l){                  
-	l.head=NULL;
-	l.tail=NULL;
+void empty (list &l) {                  
+	l.head = NULL;
+	l.tail = NULL;
 }
 
 //перевірка чи список пустий : повертае істину якщо пустий
-bool isEmpty(list &l){                
-	return (l.head==NULL);
+bool isEmpty (list &l){                
+	return (l.head == NULL);
 }
 
 //кількість елементів в списку
-int size(list &l){
-	element *e=l.tail;
-	int i=0;
-	while(e!=NULL){  // враховує останій елемент
+int size (list &l){
+	element *e = l.tail;
+	int i = 0;
+	while (e != NULL)
+	{  // враховує останій елемент
 		++i;
 		e=e->next;
 	}
+	e = NULL;
 	return i;
 }
 
 //повертає елемент за номером
 element* get(list &l,int i){
-	if(i>=0 && i<size(l)){ //перевірка номеру елемента
+	if(i>=0 && i<size(l))
+	{ //перевірка номеру елемента
 		element *d;
-		if(i<=size(l)/2){	//шукаємо з хвоста
+		if(i<=size(l)/2)
+		{	//шукаємо з хвоста
 			d=l.tail;
-			while (i){				
+			while (i)
+			{				
 				d=d->next;
-				--i;}
+				--i;
+			}
 			return d;
 		}
-		else{
+		else
+		{
 			d=l.head;	
 			int n=size(l)-i;//шукаємо з голови
-			while (n){				
+			while (n)
+			{				
 				d=d->next;
-				--n;}
+				--n;
+			}
 			return d;
 		}
 
-	}else  return NULL;
+	}
+	else  return NULL;
+	d=NULL;
 }
 
 //додавання елемента в кінець списку 
 void add(list &l,int i){
-	element *e1=new element();  //новий елемент який додається до списку
-	e1->i=i;
-	e1->next=NULL;
-	e1->previous=NULL;			//якщо це перший елемнт(0) в списку
-	if(isEmpty(l)) {
-		l.head=e1;
-		l.tail=e1;
+	element *e1 = new element();  //новий елемент який додається до списку
+	e1->i = i;
+	e1->next = NULL;
+	e1->previous = NULL;			//якщо це перший елемнт(0) в списку
+	if ( isEmpty(l) ) 
+	{
+		l.head = e1;
+		l.tail = e1;
 	}
-	else {		// якщо елементи в списку вже є: зєднуємо останій елемент з новим і пересуваємо голову списка
-		l.head->next=e1;
-		e1->previous=l.head;
-		l.head=e1;
+	else 
+	{		// якщо елементи в списку вже є: зєднуємо останій елемент з новим і пересуваємо голову списка
+		l.head->next = e1;
+		e1->previous = l.head;
+		l.head = e1;
 	}
+	e1=NULL;
 }
 
 //додавання елемента в вказану позицію
 void add(list &l,int n,int i){  //n-номер позиції (з нуля), і- значення поля
 	element *e1=new element();  // новий елемент
-	if(isEmpty(l)) {			//якщо це перший елемнт(0) в списку
+	if(isEmpty(l))
+	{			//якщо це перший елемнт(0) в списку
 		l.head=e1;	
 		l.tail=e1;
 		e1->i=i;
 		e1->next=NULL;
 		e1->previous=NULL;
 	}
-	else {
-		if(n<size(l)) {
+	else
+	{
+		if(n<size(l)) 
+		{
 			element *e=get(l,n);
 			e1->next=e;
 			e1->previous=e->previous;
@@ -100,13 +117,15 @@ void add(list &l,int n,int i){  //n-номер позиції (з нуля), і- значення поля
 			e1->next->previous=e1;
 			e1->i=i;
 		} 
-		else {
-		if(n==size(l)){
-
-			add(l,i);
-		}
+		else 
+		{
+			if(n == size(l))
+			{
+				add(l,i);
+			}
 		}
 	}
+	e1=NULL;
 }
 
 //додавання елемента в початок списку 
@@ -115,16 +134,19 @@ void addFirst(list &l,int i){
 	e1->i=i;
 	e1->next=NULL;
 	e1->previous=NULL;
-	if(isEmpty(l)) {
+	if(isEmpty(l))
+	{
 		l.head=e1;
 		l.tail=e1;
 
 	}
-	else {
+	else 
+	{
 		l.tail->previous=e1;
 		e1->next=l.tail;
 		l.tail=e1;
 	}
+	e1=NULL;
 }
 
 //функція зі змінною кількістю параметрів. n-вказує скільки буде параметрів
@@ -132,7 +154,8 @@ void addAll(list &l,int n,...){
 	va_list p;					//організація вказівника на список параметрів
 	va_start(p,n);				//встановлення вказівника на ділянку памяті де починається область змінної кількості параметрів	
 
-	for(int j=0;j<n;++j){
+	for(int j=0;j<n;++j)
+	{
 		add(l,(int)va_arg(p,int)); //зміна вказівника 
 	}
 	va_end(p);                     //завершення роботи з вказівником
