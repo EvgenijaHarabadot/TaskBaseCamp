@@ -18,12 +18,12 @@ extern "C"
 	}
 
 	
-	DLLexport bool Correct (double a,double b) {
-		 return (a >= b);	
+	DLLexport bool Correct (double a,double b) { 
+		 return (a >= b);	//чи правильно розташовані кінці відрізка
 	}
 
 	DLLexport void Set (Section &s, double a, double b) {
-		if ( ! Correct(a,b) ) 
+		if ( ! Correct(a,b) )      //якщо значення коректні присвоюємо їх відрізку
 		{
 			s.a = a;
 			s.b = b;
@@ -34,11 +34,11 @@ extern "C"
 
 	DLLexport Section* Intersection ( Section &t1, Section &t2) {
 		Section* s = new Section;
-		if ( ! Correct(t1.a,t2.b) )
+		if ( ! Correct(t1.a,t2.b) )                   //перевіряємо чи відрізок t1 має перетин з t2
 		{
-			if (! Correct(t2.a,t1.b)) 
+			if (! Correct(t2.a,t1.b))					
 			{
-				Set(*s, max(t2.a,t1.a), min(t2.b,t1.b));
+				Set(*s, max(t2.a,t1.a), min(t2.b,t1.b)); 
 			} 
 			else Empty(*s);
 		} 
@@ -47,10 +47,10 @@ extern "C"
 		return s;	
 	}
 
-	DLLexport void Print (Section &s) {
+	DLLexport void Print (Section &s) {     //MININT і MAXINT позначають межі визначення, вони символізують - і + безмежнічть (виводиться +/-*) 
 		if (s.a == MININT)
 		{
-			printf("%s   %lf %s"," ( -*  ," ,  s.b, " ) ");
+			printf("%s %lf %s"," ( -*  ," ,  s.b, " ) ");
 		}
 		else	if (s.b == MAXINT)
 		{

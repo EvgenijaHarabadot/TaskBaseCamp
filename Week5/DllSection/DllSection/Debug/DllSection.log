@@ -1,4 +1,4 @@
-﻿Build started 08.03.2012 19:39:27.
+﻿Build started 13.03.2012 22:51:36.
      1>Project "D:\C++\DllSection\DllSection\DllSection.vcxproj" on node 2 (build target(s)).
      1>InitializeBuildStatus:
          Creating "Debug\DllSection.unsuccessfulbuild" because "AlwaysCreate" was specified.
@@ -30,4 +30,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:03.78
+Time Elapsed 00:00:03.26

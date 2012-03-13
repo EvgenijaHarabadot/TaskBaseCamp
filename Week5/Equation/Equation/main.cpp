@@ -20,22 +20,33 @@ Print		 print;
 
 HMODULE InitPointers() {
 
-		hLib = LoadLibrary(TEXT("DllSection.dll"));	
-		if(!hLib)		return NULL;	
-		clear	= (Empty)GetProcAddress(hLib, "Empty");
-		isEmpty	= (IsEmpty)GetProcAddress(hLib, "IsEmpty");
-		correct	= (Correct)GetProcAddress(hLib, "Correct");
-		set	= (Set )GetProcAddress(hLib, "Set");
-		inter =  (Intersection)GetProcAddress(hLib, "Intersection");
-		print =(Print)GetProcAddress(hLib, "Print");	
-		return hLib;
+	hLib = LoadLibrary(TEXT("DllSection.dll"));	
+	if( ! hLib ) {		
+		return NULL;
+	}
+	clear	= (Empty)GetProcAddress(hLib, "Empty");
+	isEmpty	= (IsEmpty)GetProcAddress(hLib, "IsEmpty");
+	correct	= (Correct)GetProcAddress(hLib, "Correct");
+	set	= (Set )GetProcAddress(hLib, "Set");
+	inter =  (Intersection)GetProcAddress(hLib, "Intersection");
+	print =(Print)GetProcAddress(hLib, "Print");
+
+	if (!clear || !isEmpty || !correct || !set || !inter || !print) {
+		return NULL;
 	}
 
-void roots(List& vars, double b, double c);
+	return hLib;
+}
 
-void SystemIntr(List& vars, int n);
+void roots(List& vars, double b, double c);   //search of the roots of square equation
 
-void printrez(List& vars);
+void SystemIntr(List& vars, int n);           // determines the solution of  system, ie the intersection of segments
+
+void printrez(List& vars);						//outputs result
+
+
+
+
 
 void main(){
 int n=0;
@@ -51,8 +62,6 @@ scanf("%d",&n);
 SystemIntr(vars,n);
 printrez(vars);
 
-deleteNumber(vars,size(vars)-1);
-
 FreeLibrary(hLib);
 getch();
 exit(0);
@@ -60,36 +69,39 @@ exit(0);
 
 void roots(List& vars, double b, double c){
 	double x1,x2;
-	if ( (b*b-4*c) >= 0 )
+	if ( (b*b-4*c) >= 0 )             //якщо дискримінант не відємний,то існують дійсні корені
 	{
 		x1 = (-b+sqrt(b*b-4*c))/2;
 		x2 = (-b-sqrt(b*b-4*c))/2;
-		if (x1 <= x2)
+		if (x1 <= x2)                   // розвязки рівняння будуть відповідно правим і лівим кінцем відрізків
 		{
-			add(vars,MININT,x1);	
-			add(vars,x2,MAXINT);
+			add (vars, MININT, x1);	
+			add (vars, x2, MAXINT);
 		} 
 		else {
-			add(vars,MININT,x2);	
-			add(vars,x1,MAXINT);
+			add (vars, MININT, x2);	
+			add (vars, x1, MAXINT);
 		}
 	}
 }
+
 void SystemIntr(List& vars, int n){
 	int kp = 0, kq = 0, siz = 0;
 
 	for(int i=0; i<n; i++) {
-
+								//ввід коефіцієнтів
 		printf("%s\n","Enter the coefficients for the equation");
 		printf("%s\t\t","p");
 		scanf("%d",&kp);													
 		printf("%s\t\t","q");
 		scanf("%d",&kq);
 
+								//розвязок у творенного рівняння
+
 		roots(vars,kp,kq);
-
-		siz = size(vars);
-
+siz = size(vars);
+		
+								//пошук перетинів
 		if( !isEmptyList(vars) )
 		{
 			Section *s = vars.head;
@@ -119,13 +131,14 @@ void SystemIntr(List& vars, int n){
 		}
 	}
 }
-void printrez(List& vars){
-	Section *s = vars.tail;
-	while(s!=NULL)
-	{
-	print(*s);
-	s=s->next;
-	}
 
-s=NULL;
+void printrez(List& vars){
+	if(size){
+		Section *s = vars.tail;
+
+		for(int i=0; i<size(vars); ++i){
+			print(*s);
+			s = s->next;
+		}
+	}
 }

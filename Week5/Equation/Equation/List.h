@@ -50,7 +50,7 @@ void add (List &l, double a, double b) {
 		l.head=e1;
 	}
 }
-//видаленн€ з к≥нц€ к≥льк≥сть €ка передвЇтьс€ другим параметром
+//видаленн€ з к≥нц€ к≥льк≥сть елемент≥в, €ка передвЇтьс€ другим параметром
 void deleteNumber (List &l, int n) {
 	for (int i=0; i<n ; i++){
 		Section *d=l.tail;
@@ -63,7 +63,7 @@ void deleteNumber (List &l, int n) {
 		}
 	}			
 
-	delete l.head;
+	//delete l.head;
 }
 
 
