@@ -2,23 +2,23 @@
 #include <conio.h>
 #include "Struct.h"
 
-struct List {
-	Section *head;
-	Section *tail;
+struct List { //create list of segments
+	Section *head; //pointer to head element
+	Section *tail; //pointer to last element
 };
 
 
 
-//створенн€ пустого списку
+//creates empty list
 void emptyL (List &l) {                  
 	l.head = NULL;
 	l.tail = NULL;
 }
-//перев≥рка чи список пустий
+//returns true if list is empty
 bool isEmptyList (List &l) {                
 	return (l.head == NULL);
 }
-//к≥льк≥сть елемент≥в в списку
+//returns amount of element in list
 int size (List &l) {
 	Section *e = l.tail;
 	int i=0;
@@ -30,7 +30,7 @@ int size (List &l) {
 	e = NULL;
 	return i;
 }
-//додаванн€ елемента в к≥нець списку 
+//adds new element to end of list
 void add (List &l, double a, double b) {
 	Section  *e1 = new Section;
 	e1->a=a;
@@ -50,7 +50,7 @@ void add (List &l, double a, double b) {
 		l.head=e1;
 	}
 }
-//видаленн€ з к≥нц€ к≥льк≥сть елемент≥в, €ка передвЇтьс€ другим параметром
+//deletes  n elements
 void deleteNumber (List &l, int n) {
 	for (int i=0; i<n ; i++){
 		Section *d=l.tail;
@@ -62,8 +62,6 @@ void deleteNumber (List &l, int n) {
 			delete d; d=NULL;
 		}
 	}			
-
-	//delete l.head;
 }
 
 
